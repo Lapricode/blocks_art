@@ -1,7 +1,7 @@
 # Blocks_art
 Draw with blocks of pixels on a grid of blocks.
 
-As the title suggests, this program gives you the opportunity to draw with blocks of pixels on a grid of blocks 😏. The drawing is executed in a binary manner, which means that every pixel is either on or off. There are for menus with plenty of options:
+As the title suggests, this program gives you the opportunity to draw with blocks of pixels on a grid of blocks 😏. The drawing is executed in a binary manner, which means that every pixel is either on or off. There are four menus with plenty of options:
 a) Make grid menu: Here you can create a new grid or change the structure of the current grid.
 b) Main menu: Here you can make changes to the grid as a whole and save or load your drawings.
 c) Blocks editor menu: Here you can make changes to specific grid blocks of your interest and transfer the changes to the main grid.
