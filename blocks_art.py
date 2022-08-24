@@ -180,6 +180,8 @@ class blocks_art_display():
         self.grid_columns_choose.set(self.grid_columns)
         self.block_rows_choose.set(self.block_rows)
         self.block_columns_choose.set(self.block_columns)
+        self.block_rows_choose["values"] = self.find_divisors(int(self.grid_rows_choose.get()))
+        self.block_columns_choose["values"] = self.find_divisors(int(self.grid_columns_choose.get()))
         self.blocks_number_info.configure(text = int(self.grid_rows * self.grid_columns / (self.block_rows * self.block_columns)))
     def make_new_grid(self, grid_width, grid_height, grid_rows, grid_columns, block_rows, block_columns):
         self.grid_rows = grid_rows
@@ -202,8 +204,6 @@ class blocks_art_display():
     def change_blocks_only(self):
         if self.grid_rows != int(self.grid_rows_choose.get()) or self.grid_columns != int(self.grid_columns_choose.get()):
             self.show_current_grid_info()
-            self.block_rows_choose["values"] = self.find_divisors(int(self.grid_rows_choose.get()))
-            self.block_columns_choose["values"] = self.find_divisors(int(self.grid_columns_choose.get()))
             ms.showwarning("Warning", "You can not change grid rows or grid columns if you want \"change blocks only\" to work! You can only mess with block rows and block columns!")
         else:
             block_rows_previous = self.block_rows
