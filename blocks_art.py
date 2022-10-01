@@ -9,15 +9,16 @@ class blocks_art_display():
     colors_list_choose = 0
     press_color = colors_list[colors_list_choose][0]
     unpress_colors = colors_list[colors_list_choose][1]
+    canvas_offset = 3
     def __init__(self, root):
         self.root = root
         self.root.title("Blocks art display")
         self.root.geometry("+0+0")
         self.root.resizable(False, False)
-        self.grid_background = tk.Frame(self.root, bd = 20, bg = "black", relief = "raised")
-        self.grid_background.grid(row = 0, column = 0, sticky = tk.NSEW)
         self.grid_width_default = (11 / 12) * self.root.winfo_screenwidth()
         self.grid_height_default = (1 / 3) * self.root.winfo_screenheight()
+        self.grid_background = tk.Canvas(self.root, width = self.grid_width_default + blocks_art_display.canvas_offset, height = self.grid_height_default + blocks_art_display.canvas_offset, bg = "cyan", bd = 0, relief = "solid")
+        self.grid_background.grid(row = 0, column = 0, sticky = tk.NSEW)
         self.grid_rows = 16
         self.grid_columns = 80
         self.block_rows = 8
@@ -36,11 +37,11 @@ class blocks_art_display():
         self.make_grid_menu_label.grid(row = 0, column = 0, columnspan = 2, sticky = tk.NSEW)
         self.grid_rows_label = tk.Label(self.make_grid_menu_background, text = "grid rows:", font = "Arial 18 bold", fg = "white", bg = "red")
         self.grid_rows_label.grid(row = 1, column = 0, sticky = tk.NSEW)
-        self.grid_rows_choose = ttk.Combobox(self.make_grid_menu_background, font = 'Calibri 20', state = 'readonly', width = 5, values = list(range(1, 41)))
+        self.grid_rows_choose = ttk.Combobox(self.make_grid_menu_background, font = 'Calibri 20', state = 'readonly', width = 5, values = list(range(1, 101)))
         self.grid_rows_choose.grid(row = 1, column = 1, sticky = tk.NSEW)
         self.grid_columns_label = tk.Label(self.make_grid_menu_background, text = "grid columns:", font = "Arial 18 bold", fg = "white", bg = "red")
         self.grid_columns_label.grid(row = 2, column = 0, sticky = tk.NSEW)
-        self.grid_columns_choose = ttk.Combobox(self.make_grid_menu_background, font = 'Calibri 20', state = 'readonly', width = 5, values = list(range(1, 81)))
+        self.grid_columns_choose = ttk.Combobox(self.make_grid_menu_background, font = 'Calibri 20', state = 'readonly', width = 5, values = list(range(1, 101)))
         self.grid_columns_choose.grid(row = 2, column = 1, sticky = tk.NSEW)
         self.block_rows_label = tk.Label(self.make_grid_menu_background, text = "block rows:", font = "Arial 18 bold", fg = "white", bg = "red")
         self.block_rows_label.grid(row = 3, column = 0, sticky = tk.NSEW)
@@ -78,7 +79,7 @@ class blocks_art_display():
         self.inverse_button.grid(row = 2, column = 0, sticky = tk.NSEW)
         self.grid_colors_button = tk.Button(self.main_menu_background, width = 6, text = "◼", font = "Arial 20 bold", fg = blocks_art_display.press_color, bg = blocks_art_display.unpress_colors[0], command = self.change_grid_colors)
         self.grid_colors_button.grid(row = 1, column = 1, rowspan = 2, sticky = tk.NSEW)
-        self.square_grid_button = tk.Button(self.main_menu_background, text = "square grid", font = "Arial 20 bold", fg = "white", bg = "black", command = self.square_grid)
+        self.square_grid_button = tk.Button(self.main_menu_background, text = "square grid", font = "Arial 20 bold", fg = "white", bg = "black", command = self.change_grid_shape)
         self.square_grid_button.grid(row = 3, column = 0, columnspan = 2, sticky = tk.NSEW)
         self.show_blocks_button = tk.Button(self.main_menu_background, text = "show blocks", font = "Arial 20 bold", fg = "white", bg = "black", command = self.show_blocks)
         self.show_blocks_button.grid(row = 4, column = 0, columnspan = 2, sticky = tk.NSEW)
@@ -99,7 +100,7 @@ class blocks_art_display():
         self.current_block_label.grid(row = 1, column = 0, columnspan = 2, sticky = tk.NSEW)
         self.current_block_info = tk.Label(self.blocks_editor_menu_background, font = 'Calibri 20', text = "", width = 5, fg = "black", bg = "white")
         self.current_block_info.grid(row = 1, column = 2, sticky = tk.NSEW)
-        self.block_background = tk.Frame(self.blocks_editor_menu_background, bd = 5, relief = "raised")
+        self.block_background = tk.Canvas(self.blocks_editor_menu_background, width = 160 + blocks_art_display.canvas_offset, height = 160 + blocks_art_display.canvas_offset, bg = "cyan", bd = 0, relief = "solid")
         self.block_background.grid(row = 2, column = 0, rowspan = 3, sticky = tk.NW)
         self.block_index_label = tk.Label(self.blocks_editor_menu_background, text = "block:", font = "Arial 18 bold", fg = "white", bg = "red")
         self.block_index_label.grid(row = 2, column = 1, sticky = tk.NSEW)
@@ -156,8 +157,7 @@ class blocks_art_display():
         self.make_arduino_instructions_button = tk.Button(self.blocks_info_menu_background, text = "make arduino\ninstructions", font = "Arial 14 bold", fg = "black", bg = "yellow", command = self.make_arduino_instructions)
         self.make_arduino_instructions_button.grid(row = 2, column = 4, sticky = tk.NSEW)
 
-        self.make_new_grid(self.grid_width_default, self.grid_height_default,\
-                            int(self.grid_rows_choose.get()), int(self.grid_columns_choose.get()), int(self.block_rows_choose.get()), int(self.block_columns_choose.get()))
+        self.make_new_grid(self.grid_width_default, self.grid_height_default, int(self.grid_rows_choose.get()), int(self.grid_columns_choose.get()), int(self.block_rows_choose.get()), int(self.block_columns_choose.get()))
         self.show_blocks("show blocks")
 
     def find_divisors(self, number):
@@ -183,22 +183,35 @@ class blocks_art_display():
         self.block_rows_choose["values"] = self.find_divisors(int(self.grid_rows_choose.get()))
         self.block_columns_choose["values"] = self.find_divisors(int(self.grid_columns_choose.get()))
         self.blocks_number_info.configure(text = int(self.grid_rows * self.grid_columns / (self.block_rows * self.block_columns)))
+    def recall_grid_state(self):
+        for block in self.grid_blocks:
+            for pixel in block:
+                self.grid_background.itemconfigure(pixel.button, fill = blocks_art_display.unpress_colors[0])
+                if pixel.button_is_pressed:
+                    self.grid_background.itemconfigure(pixel.button, fill = blocks_art_display.press_color)
+                else:
+                    self.grid_background.itemconfigure(pixel.button, fill = blocks_art_display.unpress_colors[pixel.bg_color])
+        for pixel in self.small_block:
+            self.block_background.itemconfigure(pixel.button, fill = blocks_art_display.unpress_colors[0])
+            if pixel.button_is_pressed:
+                self.block_background.itemconfigure(pixel.button, fill = blocks_art_display.press_color)
+            else:
+                self.block_background.itemconfigure(pixel.button, fill = blocks_art_display.unpress_colors[pixel.bg_color])
     def make_new_grid(self, grid_width, grid_height, grid_rows, grid_columns, block_rows, block_columns):
         self.grid_rows = grid_rows
         self.grid_columns = grid_columns
         self.block_rows = block_rows
         self.block_columns = block_columns
-        for widget in self.grid_background.winfo_children():
-            widget.destroy()
         pixel_width = int(grid_width / self.grid_columns)
         pixel_height = int(grid_height / self.grid_rows)
         self.grid_blocks = []
+        self.grid_background.delete("all")
         for i in range(int((self.grid_rows * self.grid_columns) / (self.block_rows * self.block_columns))):
             block = []
             for j in range(self.block_rows):
                 for k in range(self.block_columns):
                     block.append(pixel_button(self.grid_background, pixel_width, pixel_height, len(self.grid_blocks), j, k, 0))
-                    block[-1].frame_button_grid(((i * self.block_columns) // self.grid_columns) * self.block_rows + j, ((i * self.block_columns) % self.grid_columns) + k)
+                    block[-1].set_button_on_grid(((i * self.block_columns) // self.grid_columns) * self.block_rows + j, ((i * self.block_columns) % self.grid_columns) + k)
             self.grid_blocks.append(block)
         self.final_actions_for_grid()
     def change_blocks_only(self):
@@ -232,10 +245,9 @@ class blocks_art_display():
         if self.show_blocks_button["text"] == "hide blocks":
             self.show_blocks("show blocks")
         if self.square_grid_button["text"] == "orthogonal grid":
-            self.square_grid("square grid")
-        for widget in self.block_background.winfo_children():
-            widget.destroy()
+            self.change_grid_shape("square grid")
         self.make_small_block(len(self.grid_blocks), self.block_rows, self.block_columns)
+        self.recall_grid_state()
         self.block_index["values"] = list(range(self.blocks_number_info["text"]))
         self.block_index.set(0)
         self.first_printed_block["values"] = list(range(self.blocks_number_info["text"]))
@@ -246,10 +258,11 @@ class blocks_art_display():
         pixel_width = int(160 / block_columns)
         pixel_height = int(160 / block_rows)
         self.small_block = []
+        self.block_background.delete("all")
         for row in range(block_rows):
             for column in range(block_columns):
                 self.small_block.append(pixel_button(self.block_background, pixel_width, pixel_height, block_number, row, column, 0))
-                self.small_block[-1].frame_button_grid(row, column)
+                self.small_block[-1].set_button_on_grid(row, column)
     def make_changes_to_small_block(self):
         small_block_index = int(self.block_index.get())
         for i in range(len(self.small_block)):
@@ -328,20 +341,8 @@ class blocks_art_display():
         blocks_art_display.press_color = blocks_art_display.colors_list[blocks_art_display.colors_list_choose][0]
         blocks_art_display.unpress_colors = blocks_art_display.colors_list[blocks_art_display.colors_list_choose][1]
         self.grid_colors_button.configure(fg = blocks_art_display.press_color, bg = blocks_art_display.unpress_colors[0])
-        for block in self.grid_blocks:
-            for pixel in block:
-                pixel.frame_button.configure(bg = blocks_art_display.unpress_colors[0])
-                if pixel.button_is_pressed:
-                    pixel.button.configure(bg = blocks_art_display.press_color)
-                else:
-                    pixel.button.configure(bg = blocks_art_display.unpress_colors[pixel.bg_color])
-        for pixel in self.small_block:
-            pixel.frame_button.configure(bg = blocks_art_display.unpress_colors[0])
-            if pixel.button_is_pressed:
-                pixel.button.configure(bg = blocks_art_display.press_color)
-            else:
-                pixel.button.configure(bg = blocks_art_display.unpress_colors[pixel.bg_color])
-    def square_grid(self, action = None):
+        self.recall_grid_state()
+    def change_grid_shape(self, action = None):
         if action == None:
             action = self.square_grid_button["text"]
         if action == "orthogonal grid":
@@ -354,10 +355,14 @@ class blocks_art_display():
             else:
                 grid_width = self.grid_width_default
                 grid_height = (self.grid_rows / self.grid_columns) * grid_width
+        self.grid_background.delete("all")
         for block in self.grid_blocks:
             for pixel in block:
-                pixel.frame_button.configure(width = grid_width / self.grid_columns, height = grid_height / self.grid_rows)
+                pixel.button_width = grid_width / self.grid_columns
+                pixel.button_height = grid_height / self.grid_rows
+                pixel.set_button_on_grid(pixel.grid_row, pixel.grid_column)
         self.square_grid_button.configure(text = ["orthogonal grid", "square grid"][[True, False].index(action == "square grid")])
+        self.recall_grid_state()
     def show_blocks(self, action = None):
         pixel_bg_color = 0
         if action == None:
@@ -370,7 +375,7 @@ class blocks_art_display():
             for pixel in self.grid_blocks[i]:
                 pixel.bg_color = pixel_bg_color % 2
                 if not pixel.button_is_pressed:
-                    pixel.button.configure(bg = self.unpress_colors[pixel.bg_color])
+                    self.grid_background.itemconfigure(pixel.button, fill = self.unpress_colors[pixel.bg_color])
         self.show_blocks_button.configure(text = ["hide blocks", "show blocks"][[True, False].index(action == "show blocks")])
     def save_draw(self):
         empty_grid = True
@@ -489,17 +494,15 @@ class pixel_button():
         self.bg_color = bg_color
         self.button_is_pressed = False
         self.control_highlight = 0
-        self.frame_button = tk.Frame(self.grid_background, bd = 1, relief = "solid", width = self.button_width, height = self.button_height, bg = blocks_art_display.unpress_colors[0])
-        self.frame_button.grid_propagate(0)
-        self.button = tk.Label(self.frame_button, bg = blocks_art_display.unpress_colors[self.bg_color], width = self.button_width, height = self.button_height, compound = "center")
-        self.button.grid(row = 1, column = 1, sticky = tk.NSEW)
-        self.button.bind("<Button-1>", self.press_button)
-        self.button.bind("<Button-2>", self.change_enter_button_mode)
-        self.button.bind("<Button-3>", self.change_continuous_paint_state)
-        self.button.bind("<Enter>", self.highlight_button_paint_continuously)
-        self.button.bind("<Leave>", self.unhighlight_button)
-    def frame_button_grid(self, row, column):
-        self.frame_button.grid(row = row, column = column, sticky = tk.NSEW)
+    def set_button_on_grid(self, row, column):
+        self.grid_row = row
+        self.grid_column = column
+        self.button = self.grid_background.create_rectangle([column * self.button_width + blocks_art_display.canvas_offset, row * self.button_height + blocks_art_display.canvas_offset, (column + 1) * self.button_width + blocks_art_display.canvas_offset, (row + 1) * self.button_height + blocks_art_display.canvas_offset], width = 1, fill = blocks_art_display.unpress_colors[self.bg_color], outline = "black", tags = f"button{self.block_index}{self.block_row}{self.block_column}")
+        self.grid_background.tag_bind(f"button{self.block_index}{self.block_row}{self.block_column}", "<Button-1>", self.press_button)
+        self.grid_background.tag_bind(f"button{self.block_index}{self.block_row}{self.block_column}", "<Button-2>", self.change_enter_button_mode)
+        self.grid_background.tag_bind(f"button{self.block_index}{self.block_row}{self.block_column}", "<Button-3>", self.change_continuous_paint_state)
+        self.grid_background.tag_bind(f"button{self.block_index}{self.block_row}{self.block_column}", "<Enter>", self.highlight_button_paint_continuously)
+        self.grid_background.tag_bind(f"button{self.block_index}{self.block_row}{self.block_column}", "<Leave>", self.unhighlight_button)
     def change_enter_button_mode(self, event):
         if pixel_button.enter_button_state == "highlight":
             pixel_button.enter_button_state = "paint"
@@ -514,9 +517,9 @@ class pixel_button():
         blocks_art_display_root.current_block_info.configure(text = self.block_index)
         if pixel_button.enter_button_state == "highlight":
             if blocks_art_display_root.copy_block_button["text"] == "copy":
-                self.button.configure(bg = pixel_button.highlight_color)
+                self.grid_background.itemconfigure(self.button, fill = pixel_button.highlight_color)
             elif blocks_art_display_root.copy_block_button["text"] == "stop":
-                self.button.configure(bg = "black")
+                self.grid_background.itemconfigure(self.button, fill = "black")
         elif pixel_button.enter_button_state == "paint":
             if pixel_button.continuous_paint_state == "mark":
                 if not self.button_is_pressed:
@@ -527,9 +530,9 @@ class pixel_button():
     def unhighlight_button(self, event):
         try:
             if self.control_highlight == 0:
-                self.button.configure(bg = blocks_art_display.unpress_colors[self.bg_color])
+                self.grid_background.itemconfigure(self.button, fill = blocks_art_display.unpress_colors[self.bg_color])
             elif self.control_highlight == 1:
-                self.button.configure(bg = blocks_art_display.press_color)
+                self.grid_background.itemconfigure(self.button, fill = blocks_art_display.press_color)
         except:
             pass
     def press_button(self, event = None):
@@ -545,10 +548,10 @@ class pixel_button():
         elif self.block_index == int(blocks_art_display_root.block_index.get()) and blocks_art_display_root.move_from_to_grid_button["text"] == "from\ngrid" and blocks_art_display_root.move_auto_manual_button["text"] == "auto":
             blocks_art_display_root.small_block[self.block_row * blocks_art_display_root.block_columns + self.block_column].press_button()
         if self.button_is_pressed:
-            self.button.configure(bg = blocks_art_display.unpress_colors[self.bg_color])
+            self.grid_background.itemconfigure(self.button, fill = blocks_art_display.unpress_colors[self.bg_color])
             self.control_highlight = 0
         else:
-            self.button.configure(bg = blocks_art_display.press_color)
+            self.grid_background.itemconfigure(self.button, fill = blocks_art_display.press_color)
             self.control_highlight = 1
         self.button_is_pressed = not self.button_is_pressed
             
