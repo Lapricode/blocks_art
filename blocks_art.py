@@ -202,8 +202,8 @@ class blocks_art_display():
         self.grid_columns = grid_columns
         self.block_rows = block_rows
         self.block_columns = block_columns
-        pixel_width = int(grid_width / self.grid_columns)
-        pixel_height = int(grid_height / self.grid_rows)
+        pixel_width = grid_width / self.grid_columns
+        pixel_height = grid_height / self.grid_rows
         self.grid_blocks = []
         self.grid_background.delete("all")
         for i in range(int((self.grid_rows * self.grid_columns) / (self.block_rows * self.block_columns))):
@@ -255,8 +255,8 @@ class blocks_art_display():
         self.first_printed_block.set(0)
         self.last_printed_block.set(self.blocks_number_info["text"] - 1)
     def make_small_block(self, block_number, block_rows, block_columns):
-        pixel_width = int(160 / block_columns)
-        pixel_height = int(160 / block_rows)
+        pixel_width = 160 / block_columns
+        pixel_height = 160 / block_rows
         self.small_block = []
         self.block_background.delete("all")
         for row in range(block_rows):
