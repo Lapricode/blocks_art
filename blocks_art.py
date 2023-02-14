@@ -460,7 +460,7 @@ class blocks_art_display():
             for j in range(self.block_rows):
                 byte = "B"
                 for k in range(self.block_columns):
-                    if self.grid_blocks[i][j * self.block_columns + k].button_is_pressed:
+                    if self.grid_blocks[first_block + i][j * self.block_columns + k].button_is_pressed:
                         byte += "1"
                     else:
                         byte += "0"
