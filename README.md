@@ -8,3 +8,7 @@ c) Blocks editor menu: Here you can make changes to specific grid blocks of your
 d) Blocks info menu: Here you can print the grid blocks in a binary way and also print arduino instructions for arduino lcd display. As a matter of fact this was the main idea of the project. This option of course works well for grids that correspond to real arduino lcd displays.
 
 Python libraries needed: tkinter, os
+
+![image](https://github.com/Lapricode/blocks_art/assets/91993549/d8ef4247-101d-403a-a238-5a8894e4fbab)
+
+![image](https://github.com/Lapricode/blocks_art/assets/91993549/9c186c2f-ea32-43d2-9672-44acdb8b398a)
