@@ -497,12 +497,14 @@ class pixel_button():
     def set_button_on_grid(self, row, column):
         self.grid_row = row
         self.grid_column = column
-        self.button = self.grid_background.create_rectangle([column * self.button_width + blocks_art_display.canvas_offset, row * self.button_height + blocks_art_display.canvas_offset, (column + 1) * self.button_width + blocks_art_display.canvas_offset, (row + 1) * self.button_height + blocks_art_display.canvas_offset], width = 1, fill = blocks_art_display.unpress_colors[self.bg_color], outline = "black", tags = f"button{self.block_index}{self.block_row}{self.block_column}")
-        self.grid_background.tag_bind(f"button{self.block_index}{self.block_row}{self.block_column}", "<Button-1>", self.press_button)
-        self.grid_background.tag_bind(f"button{self.block_index}{self.block_row}{self.block_column}", "<Button-2>", self.change_enter_button_mode)
-        self.grid_background.tag_bind(f"button{self.block_index}{self.block_row}{self.block_column}", "<Button-3>", self.change_continuous_paint_state)
-        self.grid_background.tag_bind(f"button{self.block_index}{self.block_row}{self.block_column}", "<Enter>", self.highlight_button_paint_continuously)
-        self.grid_background.tag_bind(f"button{self.block_index}{self.block_row}{self.block_column}", "<Leave>", self.unhighlight_button)
+        self.button = self.grid_background.create_rectangle([column * self.button_width + blocks_art_display.canvas_offset, row * self.button_height + blocks_art_display.canvas_offset, \
+                                                            (column + 1) * self.button_width + blocks_art_display.canvas_offset, (row + 1) * self.button_height + blocks_art_display.canvas_offset], width = 1, \
+                                                            fill = blocks_art_display.unpress_colors[self.bg_color], outline = "black", tags = f"button{self.block_index}_{self.block_row}_{self.block_column}")
+        self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Button-1>", self.press_button)
+        self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Button-2>", self.change_enter_button_mode)
+        self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Button-3>", self.change_continuous_paint_state)
+        self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Enter>", self.highlight_button_paint_continuously)
+        self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Leave>", self.unhighlight_button)
     def change_enter_button_mode(self, event):
         if pixel_button.enter_button_state == "highlight":
             pixel_button.enter_button_state = "paint"
