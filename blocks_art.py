@@ -501,8 +501,8 @@ class pixel_button():
                                                             (column + 1) * self.button_width + blocks_art_display.canvas_offset, (row + 1) * self.button_height + blocks_art_display.canvas_offset], width = 1, \
                                                             fill = blocks_art_display.unpress_colors[self.bg_color], outline = "black", tags = f"button{self.block_index}_{self.block_row}_{self.block_column}")
         self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Button-1>", self.press_button)
-        self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Button-2>", self.change_enter_button_mode)
-        self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Button-3>", self.change_continuous_paint_state)
+        self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Button-2>", self.change_continuous_paint_state)
+        self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Button-3>", self.change_enter_button_mode)
         self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Enter>", self.highlight_button_paint_continuously)
         self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Leave>", self.unhighlight_button)
     def change_enter_button_mode(self, event):
@@ -516,6 +516,7 @@ class pixel_button():
         elif pixel_button.continuous_paint_state == "erase":
             pixel_button.continuous_paint_state = "mark"
     def highlight_button_paint_continuously(self, event):
+        # self.grid_background.tag_bind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Button-1>", self.press_button)
         blocks_art_display_root.current_block_info.configure(text = self.block_index)
         if pixel_button.enter_button_state == "highlight":
             if blocks_art_display_root.copy_block_button["text"] == "copy":
@@ -538,6 +539,7 @@ class pixel_button():
         except:
             pass
     def press_button(self, event = None):
+        # self.grid_background.tag_unbind(f"button{self.block_index}_{self.block_row}_{self.block_column}", "<Button-1>")
         if blocks_art_display_root.copy_block_button["text"] == "stop" and pixel_button.copy_mode_on == False and self.block_index != len(blocks_art_display_root.grid_blocks):
             pixel_button.copy_mode_on = True
             blocks_art_display_root.move_from_to_grid_button.configure(text = "to\ngrid")
